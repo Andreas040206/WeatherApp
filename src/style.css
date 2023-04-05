@@ -19,7 +19,6 @@ body {
 .searchBarCon {
   display: flex;
   align-items: center;
-  position: fixed;
 }
 
 .searchBarInput {
@@ -65,11 +64,13 @@ body {
 }
 
 .loadingGifCon {
-  width: 100%;
-  height: 100%;
-  position: relative;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
   background-color: white;
   transition: 1s;
+  top: 0;
+  left: 0;
 }
 
 .loadingGif {
@@ -80,4 +81,5 @@ body {
   width: auto;
   height: 40px;
   width: 40px;
+  transition: 1s;
 }
