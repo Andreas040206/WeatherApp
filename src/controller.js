@@ -1,4 +1,4 @@
-import { create, reject } from "lodash";
+import { create, get, reject, some } from "lodash";
 import { createPage, appendLoadingEl } from "./UI";
 
 const getInfoFromAPI = async (location) => {
@@ -39,21 +39,23 @@ const delay = (time) => {
   });
 };
 
+let location;
+
+if (!localStorage.getItem("Location")) {
+  localStorage.setItem("Location", "London");
+  location = localStorage.getItem("Location");
+}
+
 const reloadPage = async (currentLocation) => {
   // Appends The loading screen
   const loadingEl = appendLoadingEl();
   document.body.appendChild(loadingEl);
 
-  let location;
-
   // If no Location is added, check local storage, else set "London"
-  if (currentLocation !== undefined) {
-    location = currentLocation;
-  } else if (!localStorage.getItem("Location")) {
-    localStorage.setItem("Location", "London");
-    location = "London";
-  } else {
+  if (currentLocation === undefined) {
     location = localStorage.getItem("Location");
+  } else {
+    location = currentLocation;
   }
 
   // GET data from API
@@ -62,7 +64,7 @@ const reloadPage = async (currentLocation) => {
   // Is there any data?
   if (data !== null) {
     // If there is data, lets add this location to local storage
-    localStorage.setItem("Location", currentLocation);
+    localStorage.setItem("Location", location);
 
     // If content already exist, remove it.
     const content = document.querySelector("#content");
